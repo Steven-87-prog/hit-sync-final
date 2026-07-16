@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Hit Sync — Find a Tennis Hitting Partner Near You</title>
+<meta name="description" content="Hit Sync helps tennis players find compatible hitting partners, match schedules, message friends, and get practices on the calendar." />
+<meta name="robots" content="index, follow" />
+
+<!-- Social/link preview -->
+<meta property="og:title" content="Hit Sync — Find a Tennis Hitting Partner" />
+<meta property="og:description" content="Find hitting partners, match schedules, and get on the calendar." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+
+<!-- Make it feel like an installed phone app when added to the home screen -->
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#123832" />
+<meta name="mobile-web-app-title" content="Hit Sync" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Hit Sync" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/icon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <!-- Auth screen -->
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <span class="ball-dot"></span>
+        <span class="brand-word">Hit Sync</span>
+      </div>
+      <p class="auth-tagline">Find a hitting partner. Lock in a court. Get on the calendar.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log in</button>
+        <button class="auth-tab" data-tab="signup">Sign up</button>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <label>Email <input type="email" name="email" required /></label>
+        <label>Password <input type="password" name="password" required /></label>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      </form>
+
+      <form id="signup-form" class="auth-form hidden">
+        <label>Name <input type="text" name="name" required /></label>
+        <label>Email <input type="email" name="email" required /></label>
+        <label>ZIP code <input type="text" name="zip" placeholder="75201" /></label>
+        <label>Password <input type="password" name="password" required minlength="6" /></label>
+        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+      </form>
+
+      <p id="auth-error" class="auth-error hidden"></p>
+    </div>
+  </div>
+
+  <!-- App shell -->
+  <div id="app-shell" class="app-shell hidden">
+    <header class="topbar">
+      <button id="nav-toggle" class="nav-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-brand"><span class="ball-dot small"></span> Hit Sync</div>
+      <div class="topbar-right">
+        <button id="notif-bell" class="icon-btn" aria-label="Notifications">
+          🔔<span id="notif-count" class="notif-count hidden">0</span>
+        </button>
+        <button id="logout-btn" class="icon-btn" aria-label="Log out">⎋</button>
+      </div>
+    </header>
+
+    <nav id="side-nav" class="side-nav">
+      <button class="nav-link active" data-page="dashboard">Dashboard</button>
+      <button class="nav-link" data-page="find-players">Find Players</button>
+      <button class="nav-link" data-page="find-friends">Find Friends</button>
+      <button class="nav-link" data-page="friends">Friends</button>
+      <button class="nav-link" data-page="calendar">Calendar</button>
+      <button class="nav-link" data-page="groups">Groups</button>
+      <button class="nav-link" data-page="messages">Messages</button>
+      <button class="nav-link" data-page="profile">Profile</button>
+      <button class="nav-link nav-help" data-action="replay-tutorial">↺ Replay tutorial</button>
+    </nav>
+    <div id="nav-scrim" class="nav-scrim hidden"></div>
+
+    <main id="page-content" class="page-content"></main>
+  </div>
+
+  <!-- Tutorial overlay -->
+  <div id="tutorial-overlay" class="tutorial-overlay hidden">
+    <div id="tutorial-highlight" class="tutorial-highlight"></div>
+    <div id="tutorial-box" class="tutorial-box">
+      <p id="tutorial-text"></p>
+      <p id="tutorial-waiting-hint" class="tutorial-waiting-hint hidden"></p>
+      <div class="tutorial-actions">
+        <button id="tutorial-skip" class="btn btn-sm tutorial-end-btn">End tutorial</button>
+        <button id="tutorial-next" class="btn btn-primary btn-sm">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/tutorial.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

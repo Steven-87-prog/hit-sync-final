@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: hit-sync
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 4000
+      # Free Upstash Redis database — this is what makes data survive
+      # restarts/redeploys on Render's free tier, which doesn't support
+      # persistent disks. Get these two values from upstash.com (free) and
+      # paste them in on the Render dashboard after this first deploy —
+      # see DEPLOY.md for the exact steps.
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
