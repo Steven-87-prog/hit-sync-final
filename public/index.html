@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Hit Sync</title>
+<meta name="description" content="Hit Sync helps tennis players find compatible hitting partners, match schedules, message friends, and get practices on the calendar." />
+<meta name="robots" content="index, follow" />
+
+<!-- Social/link preview -->
+<meta property="og:title" content="Hit Sync — Find a Tennis Hitting Partner" />
+<meta property="og:description" content="Find hitting partners, match schedules, and get on the calendar." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+
+<!-- Make it feel like an installed phone app when added to the home screen -->
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#201C56" />
+<meta name="mobile-web-app-title" content="Hit Sync" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Hit Sync" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
+<link rel="apple-touch-icon" href="/favicon-180.png" />
+<link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
+<link rel="icon" href="/favicon-512.png" type="image/png" sizes="512x512" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <!-- Landing screen — shown first, before login/signup -->
+  <div id="landing-screen" class="landing-screen">
+    <header class="landing-topbar">
+      <div class="topbar-brand"><img src="/logo-full.png" alt="Hit Sync" class="brand-logo-img" /></div>
+      <div class="landing-topbar-actions" style="display:flex;gap:8px">
+        <button class="btn btn-ghost" id="landing-login-btn">Log in</button>
+        <button class="btn btn-primary" id="landing-signup-btn">Create account</button>
+      </div>
+    </header>
+    <div id="landing-content" class="page-content" style="max-width:1080px;margin:0 auto"></div>
+  </div>
+
+  <!-- Auth screen -->
+  <div id="auth-screen" class="auth-screen hidden">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <img src="/logo-full.png" alt="Hit Sync" class="brand-logo-img brand-logo-img-lg" />
+      </div>
+      <p class="auth-tagline">Find a hitting partner. Lock in a court. Get on the calendar.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log in</button>
+        <button class="auth-tab" data-tab="signup">Sign up</button>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <label>Email <input type="email" name="email" required /></label>
+        <label>Password <input type="password" name="password" required /></label>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      </form>
+
+      <form id="signup-form" class="auth-form hidden">
+        <label>Full name <input type="text" name="name" placeholder="First and last name" required /></label>
+        <label>Email <input type="email" name="email" required /></label>
+        <label>Phone number <input type="tel" name="phone" placeholder="(555) 555-5555" required /></label>
+        <label>Password <input type="password" name="password" required minlength="6" /></label>
+        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+      </form>
+
+      <p id="auth-error" class="auth-error hidden"></p>
+      <button class="btn btn-ghost btn-block" id="auth-back-to-landing" style="margin-top:10px">← Back</button>
+    </div>
+  </div>
+
+  <!-- App shell -->
+  <div id="app-shell" class="app-shell hidden">
+    <header class="topbar">
+      <button id="nav-toggle" class="nav-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button id="brand-home-link" class="topbar-brand" style="border:none;background:none;cursor:pointer"><img src="/logo-full.png" alt="Hit Sync" class="brand-logo-img" /></button>
+
+      <nav id="side-nav" class="side-nav">
+        <button class="nav-link active" data-page="dashboard">Dashboard</button>
+        <button class="nav-link" data-page="find-hits">Find Hits</button>
+        <button class="nav-link" data-page="find-paid-hits">Paid Hits</button>
+        <button class="nav-link" data-page="friends">Friends</button>
+        <button class="nav-link" data-page="calendar">Calendar</button>
+        <button class="nav-link" data-page="messages">Messages</button>
+        <button class="nav-link" data-page="availability">Availability</button>
+        <button class="nav-link" data-page="profile">Profile</button>
+      </nav>
+
+      <div class="topbar-right">
+        <button id="notif-bell" class="icon-btn" aria-label="Notifications">
+          <svg class="bell-icon" viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.2c-.66 0-1.2.54-1.2 1.2v.62C7.5 4.7 5.6 7.3 5.6 10.6v3.5c0 1.05-.42 2.05-1.16 2.79l-.55.55c-.66.66-.19 1.79.74 1.79h14.74c.93 0 1.4-1.13.74-1.79l-.55-.55a3.95 3.95 0 0 1-1.16-2.79v-3.5c0-3.3-1.9-5.9-5.2-6.58v-.62c0-.66-.54-1.2-1.2-1.2z"
+              fill="#FFC72C" stroke="#1B1A2E" stroke-width="1.5" stroke-linejoin="round"/>
+            <ellipse cx="9.3" cy="7.6" rx="1.15" ry="1.8" fill="#FFF3C4" opacity="0.85" transform="rotate(-18 9.3 7.6)"/>
+            <path d="M9.1 19.9a2.9 2.9 0 0 0 5.8 0" fill="none" stroke="#1B1A2E" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span id="notif-count" class="notif-count hidden">0</span>
+        </button>
+        <button id="logout-btn" class="btn btn-ghost btn-sm" aria-label="Log out">Logout</button>
+      </div>
+    </header>
+    <div id="nav-scrim" class="nav-scrim hidden"></div>
+
+    <main id="page-content" class="page-content"></main>
+
+    <button id="replay-tutorial-fab" class="replay-tutorial-fab" data-action="replay-tutorial" aria-label="Replay tutorial" title="Replay tutorial">Tutorial</button>
+  </div>
+
+  <!-- Tutorial overlay -->
+  <div id="tutorial-overlay" class="tutorial-overlay hidden">
+    <div id="tutorial-highlight" class="tutorial-highlight"></div>
+    <div id="tutorial-box" class="tutorial-box">
+      <p id="tutorial-text"></p>
+      <p id="tutorial-waiting-hint" class="tutorial-waiting-hint hidden"></p>
+      <div class="tutorial-actions">
+        <button id="tutorial-skip" class="btn btn-sm tutorial-end-btn">End tutorial</button>
+        <button id="tutorial-next" class="btn btn-primary btn-sm">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/tutorial.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
