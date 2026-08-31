@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: hit-sync
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 4000
+      # Free Upstash Redis database — this is what makes data survive
+      # restarts/redeploys on Render's free tier, which doesn't support
+      # persistent disks. Get these two values from upstash.com (free) and
+      # paste them in on the Render dashboard after this first deploy —
+      # see DEPLOY.md for the exact steps.
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      # Optional — real SMS notifications. Leave unset in the Render
+      # dashboard to skip SMS entirely; everything else works fine without
+      # it. See DEPLOY.md for Twilio setup.
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_FROM_NUMBER
+        sync: false
+      # Your site's real URL, used to build the link included in every SMS
+      # text. Pre-filled with your known Render URL — update if you switch
+      # to a custom domain.
+      - key: APP_URL
+        value: https://hit-sync.onrender.com
